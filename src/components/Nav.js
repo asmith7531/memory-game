@@ -1,14 +1,32 @@
 import React from "react";
-import { Header, Segment, Grid } from "semantic-ui-react";
+import img from "../components/game-of-thrones-iron-throne.jpg";
+import { Header, Segment, Container, Grid } from "semantic-ui-react";
 const Nav = props => (
   <>
-    <Segment className="brand animated lightSpeedIn">
-      <Header size="huge" textAlign="center" href="/clicky-game/">
-        {props.title}
-      </Header>
-    </Segment>
+    <Container
+      textAlign="center"
+      style={{
+        minWidth: "100vw",
+        minHeight: "30pc",
+        backgroundImage: `url(${img})`,
+        backgroundSize: "cover",
+        fontWeight: "normal",
+        marginBottom: 0
+      }}
+      className="brand  lightSpeedIn"
+    >
+      <Header
+        size="huge"
+        inverted
+        content={props.title}
+        textAlign="center"
+        href="/clicky-game/"
+        textAlign="center"
+        className="animated"
+      />
+    </Container>
 
-    <Grid>
+    <Grid textAlign="center">
       <Segment textAlign="center">
         <Segment id="rw">{props.rightWrong}</Segment>
 
