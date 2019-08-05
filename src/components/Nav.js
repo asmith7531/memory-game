@@ -1,19 +1,23 @@
 import React from "react";
-
+import { Header, Segment, Grid } from "semantic-ui-react";
 const Nav = props => (
-  <nav>
-    <ul>
-      <li className="brand animated lightSpeedIn">
-        <a href="/clicky-game/">{props.title}</a>
-      </li>
+  <>
+    <Segment className="brand animated lightSpeedIn">
+      <Header size="huge" textAlign="center" href="/clicky-game/">
+        {props.title}
+      </Header>
+    </Segment>
 
-      <li id="rw">{props.rightWrong}</li>
+    <Grid>
+      <Segment textAlign="center">
+        <Segment id="rw">{props.rightWrong}</Segment>
 
-      <li id="cur-sco">Current Score: {props.score}</li>
+        <Segment id="cur-sco">Current Score: {props.score}</Segment>
 
-      <li id="top-sco">Top Score: {props.topScore}</li>
-    </ul>
-  </nav>
+        <Segment id="top-sco">Top Score: {props.topScore}</Segment>
+      </Segment>
+    </Grid>
+  </>
 );
 
 export default Nav;
