@@ -4,12 +4,11 @@ import Nav from "./components/Nav";
 import Wrapper from "./components/Wrapper";
 import Title from "./components/Title";
 import Container from "./Container";
-import Row from "./Row";
 import Column from "./Column";
-import friends from "./friends.json";
+import characters from "./characters.json";
 import "./App.css";
 import "semantic-ui-css/semantic.min.css";
-
+//shuffles the array of character cards so we can ge a new random order (Fischer-Yates)
 function shuffleCharacterCards(array) {
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
@@ -17,17 +16,15 @@ function shuffleCharacterCards(array) {
   }
   return array;
 }
-
 class App extends Component {
-  // Set this.state
   state = {
-    friends,
+    characters,
     currentScore: 0,
     topScore: 0,
     rightWrong: "",
     clicked: []
   };
-
+  //searches the clicked array for the id of our character
   handleClick = id => {
     if (this.state.clicked.indexOf(id) === -1) {
       this.handleIncrement();
@@ -35,13 +32,14 @@ class App extends Component {
     } else {
       this.handleReset();
     }
+    console.log(this.state.clicked);
   };
-
+  //handles the score, will only be called when the clicked array does not contain the id of the clicked character
   handleIncrement = () => {
     const newScore = this.state.currentScore + 1;
     this.setState({
       currentScore: newScore,
-      rightWrong: ""
+      rightWrong: "You are safe... for now"
     });
     if (newScore >= this.state.topScore) {
       this.setState({ topScore: newScore });
@@ -50,7 +48,7 @@ class App extends Component {
     }
     this.handleShuffle();
   };
-
+  //prints Wrong! and resets the game, current score, and high score if applicable
   handleReset = () => {
     this.setState({
       currentScore: 0,
@@ -60,12 +58,10 @@ class App extends Component {
     });
     this.handleShuffle();
   };
-
   handleShuffle = () => {
-    let shuffledFriends = shuffleCharacterCards(friends);
-    this.setState({ friends: shuffledFriends });
+    let shuffledCharacters = shuffleCharacterCards(characters);
+    this.setState({ characters: shuffledCharacters });
   };
-
   render() {
     return (
       <Wrapper>
@@ -75,32 +71,24 @@ class App extends Component {
           topScore={this.state.topScore}
           rightWrong={this.state.rightWrong}
         />
-
         <Title>
-          Try to click on each character once. Remember, when you play the game
-          of thrones, you either win or you die.
+          This is a memory game. Try to click on each character once. Remember,
+          when you play the game of thrones, you either win or you die.
         </Title>
-
         <Container>
-          <Row>
-            {this.state.friends.map(friend => (
-              <Column size="md-3 sm-6">
-                <Card
-                  key={friend.id}
-                  handleClick={this.handleClick}
-                  handleIncrement={this.handleIncrement}
-                  handleReset={this.handleReset}
-                  handleShuffle={this.handleShuffle}
-                  id={friend.id}
-                  image={friend.image}
-                />
-              </Column>
-            ))}
-          </Row>
+          {this.state.characters.map(character => (
+            <Column size="md-3 sm-6">
+              <Card
+                key={character.id}
+                handleClick={this.handleClick}
+                id={character.id}
+                image={character.image}
+              />
+            </Column>
+          ))}
         </Container>
       </Wrapper>
     );
   }
 }
-
 export default App;
